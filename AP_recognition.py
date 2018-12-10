@@ -3,6 +3,7 @@ import sounddevice as sd
 import time
 import random
 import os
+import sys
 from termcolor import colored
 from colorama import init
 
@@ -42,6 +43,7 @@ def run_seq(test_seq, hard=False):
         else:
             play('./notes/sung/{}.wav'.format(target))
 
+        time.sleep(0.5)
 
         for note in target_seq:
             path = "./notes/" + note + '/' + random.choice(os.listdir("./notes/" + note + "/"))
@@ -50,24 +52,29 @@ def run_seq(test_seq, hard=False):
             if note == target:
                 print(colored('that was the target note', 'green'))
             else:
-                print(colored('that was not the target note ({})'.format(note), 'red'))
+                if len(sys.argv) >= 3:
+                    if sys.argv[2] == 'D':
+                        print(colored('that was not the target note ({})'.format(note), 'red'))
+                else:
+                    print(colored('that was not the target note', 'red'))
+
             time.sleep(.1)
 
 
 def run(test_seq):
-    resp = input('Press S for single tone or A for all ')
-    if resp == 'A':
-        random.shuffle(test_seq)
-        run_seq(test_seq)
+    if len(sys.argv) >= 2:
+        if sys.argv[1] == 'A':
+            random.shuffle(test_seq)
+            run_seq(test_seq)
 
-    else:
-        test_seq = [input('What pitch to test? ')]
-        hard = True if input('Hard mode? ') == 'Y' else False
-        run_seq(test_seq, hard)
+        else:
+            test_seq = [input('What pitch to test? ')]
+            hard = True if input('Hard mode? ') == 'Y' else False
+            run_seq(test_seq, hard)
 
 
 run(all)
-run(test_seq)
+run(all)
 
 # to remove octave numbers
 # regex = re.compile('[^a-zA-Z]')

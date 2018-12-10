@@ -8,6 +8,7 @@ from colorama import init
 
 all = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
 test_seq = ['A#', 'C#', 'D#', 'F#', 'G#']
+naturals = list(set(all) - set(test_seq))
 
 # initialize terminal colors
 init()
@@ -35,25 +36,28 @@ def run_seq(test_seq, hard=False):
         print('target: ', target)
         target_seq = gen_seq(target) if not hard else gen_seq(target, 72)
 
-        for i in range(3):
-            play('./notes/' + target + '/{}.wav'.format(target))
+        if target in naturals:
+            play('./notes/sung/{}s.wav'.format(target))
+            time.sleep(0.1)
+        else:
+            play('./notes/sung/{}.wav'.format(target))
+
 
         for note in target_seq:
             path = "./notes/" + note + '/' + random.choice(os.listdir("./notes/" + note + "/"))
             play(path)
-            time.sleep(1.25)
+            time.sleep(1.35)
             if note == target:
                 print(colored('that was the target note', 'green'))
             else:
-                print(colored('that was not the target note', 'red'))
-            time.sleep(.5)
+                print(colored('that was not the target note ({})'.format(note), 'red'))
+            time.sleep(.1)
 
 
 def run(test_seq):
     resp = input('Press S for single tone or A for all ')
     if resp == 'A':
-        if input('Shuffle? ') == 'Y':
-            random.shuffle(test_seq)
+        random.shuffle(test_seq)
         run_seq(test_seq)
 
     else:
@@ -62,7 +66,7 @@ def run(test_seq):
         run_seq(test_seq, hard)
 
 
-run(test_seq)
+run(all)
 run(test_seq)
 
 # to remove octave numbers

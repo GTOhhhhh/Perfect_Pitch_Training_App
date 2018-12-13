@@ -9,6 +9,7 @@ from colorama import init
 
 all = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
 test_seq = ['A#', 'C#', 'D#', 'F#', 'G#']
+weak = ['A#', 'C#', 'F', 'F#', 'G#']
 naturals = list(set(all) - set(test_seq))
 
 # initialize terminal colors
@@ -48,17 +49,27 @@ def run_seq(test_seq, hard=False):
         for note in target_seq:
             path = "./notes/" + note + '/' + random.choice(os.listdir("./notes/" + note + "/"))
             play(path)
-            time.sleep(1.35)
+            time.sleep(1.5)
             if note == target:
                 print(colored('that was the target note', 'green'))
             else:
                 if len(sys.argv) >= 3:
                     if sys.argv[2] == 'D':
-                        print(colored('that was not the target note ({})'.format(note), 'red'))
+                        out = note
+                        if out == 'C#':
+                            out = 'Db'
+                        elif out == 'D#':
+                            out = 'Eb'
+                        elif out == 'G#':
+                            out = 'Ab'
+                        elif out == 'A#':
+                            out = 'Bb'
+                        print(colored('that was not the target note ({})'.format(out), 'red'))
                 else:
                     print(colored('that was not the target note', 'red'))
 
             time.sleep(.1)
+
 
 
 def run(test_seq):

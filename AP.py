@@ -9,7 +9,7 @@ from colorama import init
 
 all = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
 test_seq = ['A#', 'C#', 'D#', 'F#', 'G#']
-weak = ['A#', 'C#', 'F', 'F#', 'G#']
+weak = ['A#', 'C#', 'F', 'F#', 'G#', 'E']
 naturals = list(set(all) - set(test_seq))
 
 # initialize terminal colors
@@ -73,16 +73,23 @@ def run_seq(test_seq, hard=False):
 
 
 def run(test_seq):
+    if len(sys.argv) == 1:
+        sys.argv.append('A')
+        sys.argv.append('D')
+
     if len(sys.argv) >= 2:
         if sys.argv[1] == 'A':
             random.shuffle(test_seq)
             run_seq(test_seq)
 
+        elif sys.argv[1] == 'W':
+            random.shuffle(weak)
+            run_seq(weak)
+
         else:
             test_seq = [input('What pitch to test? ')]
             hard = True if input('Hard mode? ') == 'Y' else False
             run_seq(test_seq, hard)
-
 
 run(all)
 run(all)

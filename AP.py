@@ -49,7 +49,7 @@ def run_seq(test_seq, hard=False):
         for note in target_seq:
             path = "./notes/" + note + '/' + random.choice(os.listdir("./notes/" + note + "/"))
             play(path)
-            time.sleep(1.35)
+            time.sleep(1.5)
             if note == target:
                 print(colored('that was the target note', 'green'))
             else:

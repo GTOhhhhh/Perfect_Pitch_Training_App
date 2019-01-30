@@ -1,4 +1,4 @@
-# Perfect_Pitch_Training_App
+# Perfect Pitch Training App
 A simple app for practising absolute (perfect) pitch recognition. The app plays a series of random pitches sampled from multiple octaves
 and a variety of instruments. In each sequence the target note is played 3-5 times interspersed with the random pitches.
 The goal is to memorize the target pitch. After a short delay (1.7 seconds) a red message ('that was not the target pitch') or a green

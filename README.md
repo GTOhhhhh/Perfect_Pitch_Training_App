@@ -12,7 +12,7 @@ Important: only runs on windows only
 e.g. python AP.py X D
 
 first argument can be X (prompt user to enter the pitch they wish to train) or A (all 12 pitches in random order)
-second argument is optional to display the pitch that just played
+second argument is optional to display the pitch that just played along with the target note message. i.e. 'that was not the target note (A)'
 
 ## License
 

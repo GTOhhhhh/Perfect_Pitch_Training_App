@@ -8,7 +8,9 @@ message ('that was the targe pitch'). This is intended to facilitate memorizing 
 Important: only runs on windows only
 - run setup.py to install required python packages
 - run AP.py to launch
+
 e.g. python AP.py X D
+
 first argument can be X (prompt user to enter the pitch they wish to train) or A (all 12 pitches in random order)
 second argument is optional to display the pitch that just played
 

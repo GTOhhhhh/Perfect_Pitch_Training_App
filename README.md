@@ -5,9 +5,12 @@ The goal is to memorize the target pitch. After a short delay (1.7 seconds) a re
 message ('that was the targe pitch'). This is intended to facilitate memorizing the sound of the pitch without using relative pitch.
 
 ## Getting Started
-Important: only runs on windows only
 - run setup.py to install required python packages
 - run AP.py to launch
+
+if you are on linux install following to satsify sounddevice dependencies:
+sudo apt-get install libportaudio2
+
 
 e.g. python AP.py X D
 

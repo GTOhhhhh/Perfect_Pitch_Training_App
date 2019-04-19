@@ -9,7 +9,7 @@ from colorama import init
 
 all = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
 test_seq = ['A#', 'C#', 'D#', 'F#', 'G#']
-weak = ['A#', 'C#', 'F', 'F#', 'G#', 'E']
+weak = ['A#', 'C#', 'F', 'C', 'B', 'D#', 'E']
 naturals = list(set(all) - set(test_seq))
 
 
@@ -34,7 +34,7 @@ def play(path):
     sd.play(data, fs, blocking=True)
 
 
-def run_seq(test_seq, hard=False):
+def run_seq(test_seq, hard=False, speed=1.5):
     for target in test_seq:
         print('target: ', target)
         target_seq = gen_seq(target) if not hard else gen_seq(target, 72)
@@ -51,7 +51,7 @@ def run_seq(test_seq, hard=False):
             path = "./notes/" + note + '/' + random.choice(os.listdir("./notes/" + note + "/"))
             play(path)
 
-            time.sleep(1.5)
+            time.sleep(speed)
 
             if note == target:
                 print(colored('that was the target note', 'green'))
@@ -71,7 +71,6 @@ def run_seq(test_seq, hard=False):
                 else:
                     print(colored('that was not the target note', 'red'))
 
-            time.sleep(.1)
 
 
 
@@ -81,13 +80,13 @@ def run(test_seq):
         sys.argv.append('D')
 
     if len(sys.argv) >= 2:
-        if sys.argv[1] == 'A':
+        if sys.argv[1] == 'F':
             random.shuffle(test_seq)
-            run_seq(test_seq)
+            run_seq(test_seq, speed=0.4)
 
-        elif sys.argv[1] == 'W':
-            random.shuffle(weak)
-            run_seq(weak)
+        elif sys.argv[1] == 'S':
+            random.shuffle(test_seq)            
+            run_seq(test_seq, speed=1.5)
 
         else:
             test_seq = [input('What pitch to test? ')]

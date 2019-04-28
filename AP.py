@@ -8,11 +8,9 @@ from termcolor import colored
 from colorama import init
 
 all = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
-test_seq = ['A#', 'C#', 'D#', 'F#', 'G#']
-weak = ['A#', 'C#', 'F', 'C', 'B', 'D#', 'E']
-naturals = list(set(all) - set(test_seq))
-display = False
-
+sharps = ['A#', 'C#', 'D#', 'F#', 'G#']
+weak = ['G#', 'A#', 'B', 'C', 'C#', 'B', 'D#', 'E']
+naturals = list(set(all) - set(sharps))
 
 # initialize terminal colors
 init()
@@ -35,10 +33,11 @@ def play(path):
     sd.play(data, fs, blocking=False)
 
 
-def run_seq(test_seq, hard=False, speed=1.5):
+def run_seq(test_seq, hard=False, speed=1.5, display=False):
     for target in test_seq:
         print('target: ', target)
         target_seq = gen_seq(target) if not hard else gen_seq(target, 72)
+        print(target_seq)
 
         if target in naturals:
             play('./notes/sung/{}s.wav'.format(target))
@@ -46,7 +45,7 @@ def run_seq(test_seq, hard=False, speed=1.5):
         else:
             play('./notes/sung/{}.wav'.format(target))
 
-        time.sleep(0.7)
+        time.sleep(1)
 
         for note in target_seq:
             path = "./notes/" + note + '/' + random.choice(os.listdir("./notes/" + note + "/"))
@@ -57,49 +56,48 @@ def run_seq(test_seq, hard=False, speed=1.5):
             if note == target:
                 print(colored('that was the target note', 'green'))
             else:
-                if len(sys.argv) >= 3:
-                    if sys.argv[2] == 'D':
-                        out = note
-                        if out == 'C#':
-                            out = 'Db'
-                        elif out == 'D#':
-                            out = 'Eb'
-                        elif out == 'G#':
-                            out = 'Ab'
-                        elif out == 'A#':
-                            out = 'Bb'
-                        print(colored('that was not the target note ({})'.format(out), 'red'))
+                if display:
+                    out = note
+                    if out == 'C#':
+                        out = 'Db'
+                    elif out == 'D#':
+                        out = 'Eb'
+                    elif out == 'G#':
+                        out = 'Ab'
+                    elif out == 'A#':
+                        out = 'Bb'
+                    print(colored('that was not the target note ({})'.format(out), 'red'))
                 else:
                     print(colored('that was not the target note', 'red'))
 
 
-
-
 def run(test_seq):
-    if len(sys.argv) == 1:
+    args = len(sys.argv)
+    display = False
+    speed = 1.5
+    if args == 1:
         sys.argv.append('A')
-        sys.argv.append('D')
-
-    # if len(sys.argv) >= 3:
-        # if sys.argv[2] == 'D':
-            # display =  True
-
-    if len(sys.argv) >= 2:
+    if args >= 2:
         if sys.argv[1] == 'F':
-            random.shuffle(test_seq)
-            run_seq(test_seq, speed=0.7)
-
+            speed = 0.7
         elif sys.argv[1] == 'S':
-            random.shuffle(test_seq)            
-            run_seq(test_seq, speed=1.4)
-    
-    
+            speed = 1.4
+    if args >= 3:
+        if sys.argv[2] == 'W':
+            test_seq = weak
+        elif sys.argv[2] == 'D':
+            display = True
+    if args >= 4:
+        if sys.argv[3] == 'D':
+            display = True
+    run_seq(test_seq, speed=speed, display=display)
 
+    # else:
+    #     test_seq = [input('What pitch to test? ')]
+    #     hard = True if input('Hard mode? ') == 'Y' else False
+    #     run_seq(test_seq, hard)
+    #     return
 
-        else:
-            test_seq = [input('What pitch to test? ')]
-            hard = True if input('Hard mode? ') == 'Y' else False
-            run_seq(test_seq, hard)
 
 run(all)
 run(all)

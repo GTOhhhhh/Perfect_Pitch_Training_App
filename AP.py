@@ -11,6 +11,7 @@ all = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
 test_seq = ['A#', 'C#', 'D#', 'F#', 'G#']
 weak = ['A#', 'C#', 'F', 'C', 'B', 'D#', 'E']
 naturals = list(set(all) - set(test_seq))
+display = False
 
 
 # initialize terminal colors
@@ -31,7 +32,7 @@ def gen_seq(target, k=28, add=(4, 5, 6)):
 
 def play(path):
     data, fs = sf.read(path, frames=10 ** 5)
-    sd.play(data, fs, blocking=True)
+    sd.play(data, fs, blocking=False)
 
 
 def run_seq(test_seq, hard=False, speed=1.5):
@@ -79,14 +80,21 @@ def run(test_seq):
         sys.argv.append('A')
         sys.argv.append('D')
 
+    # if len(sys.argv) >= 3:
+        # if sys.argv[2] == 'D':
+            # display =  True
+
     if len(sys.argv) >= 2:
         if sys.argv[1] == 'F':
             random.shuffle(test_seq)
-            run_seq(test_seq, speed=0.4)
+            run_seq(test_seq, speed=0.7)
 
         elif sys.argv[1] == 'S':
             random.shuffle(test_seq)            
-            run_seq(test_seq, speed=1.5)
+            run_seq(test_seq, speed=1.4)
+    
+    
+
 
         else:
             test_seq = [input('What pitch to test? ')]

@@ -9,7 +9,8 @@ from colorama import init
 
 all = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
 sharps = ['A#', 'C#', 'D#', 'F#', 'G#']
-weak = ['G#', 'A#', 'B', 'C', 'C#', 'B', 'D#', 'E']
+# weak = ['G#', 'A#', 'C', 'C#',  'D#']
+weak = ['C#']
 naturals = list(set(all) - set(sharps))
 
 # initialize terminal colors
@@ -37,7 +38,6 @@ def run_seq(test_seq, hard=False, speed=1.5, display=False):
     for target in test_seq:
         print('target: ', target)
         target_seq = gen_seq(target) if not hard else gen_seq(target, 72)
-        print(target_seq)
 
         if target in naturals:
             play('./notes/sung/{}s.wav'.format(target))
@@ -81,15 +81,17 @@ def run(test_seq):
         if sys.argv[1] == 'F':
             speed = 0.7
         elif sys.argv[1] == 'S':
-            speed = 1.4
+            speed = 1.7
     if args >= 3:
         if sys.argv[2] == 'W':
             test_seq = weak
+            print(f"{test_seq}")
         elif sys.argv[2] == 'D':
             display = True
     if args >= 4:
         if sys.argv[3] == 'D':
             display = True
+    random.shuffle(test_seq)
     run_seq(test_seq, speed=speed, display=display)
 
     # else:

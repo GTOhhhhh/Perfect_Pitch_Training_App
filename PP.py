@@ -8,6 +8,7 @@ from termcolor import colored
 from colorama import init
 
 all = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
+fixed = ['C#', 'A#', 'F', 'C', 'A', 'D#', 'B', 'F#','G#', 'E', 'D', 'G']
 sharps = ['A#', 'C#', 'D#', 'F#', 'G#']
 # weak = ['G#', 'A#', 'C', 'C#',  'D#']
 weak = ['C#', 'F', 'F#', 'A#']
@@ -28,9 +29,55 @@ def gen_seq(target, k=90, add=14):
     return seq
 
 
+def gen_seq_acc(targets, k=90, add=14):
+    seq = list(set(all) - set(targets))
+    seq = random.choices(seq, k=k)
+    # print(seq)
+    # print(targets*add)
+    for i in range(add):
+        seq.extend(targets)
+    random.shuffle(seq)
+    # print(seq)
+    return seq
+
+
 def play(path):
     data, fs = sf.read(path, frames=10 ** 5)
     sd.play(data, fs, blocking=False)
+
+
+def accumulate_seq(test_seq, hard=False, speed=0.7):
+    targets = []
+    for target in test_seq:
+        # accumulate targets
+        # active targets have note name displayed and green text
+        targets.append(target)
+        if len(targets) > 2:
+            targets.pop(0)
+        print('targets: ', targets)
+        target_seq = gen_seq_acc(targets) if not hard else gen_seq(target, 90)
+
+        time.sleep(2.5)
+
+        for note in target_seq:
+            # print(note)
+            path = "./notes/" + note + '/' + random.choice(os.listdir("./notes/" + note + "/"))
+            play(path)
+
+            time.sleep(speed)
+
+            if note in targets:
+                if note == 'C#':
+                    note = 'Db'
+                elif note == 'D#':
+                    note = 'Eb'
+                elif note == 'G#':
+                    note = 'Ab'
+                elif note == 'A#':
+                    note = 'Bb'
+                print(colored('that was the target note ({})'.format(note), 'green'))
+            else:
+                print(colored('that was not the target note', 'red'))
 
 
 def run_seq(test_seq, hard=False, speed=0.7, display=False):
@@ -38,29 +85,18 @@ def run_seq(test_seq, hard=False, speed=0.7, display=False):
         print('target: ', target)
         target_seq = gen_seq(target) if not hard else gen_seq(target, 90)
 
-        # if target in naturals:
-        #     play('./notes/sung/{}s.wav'.format(target))
-        #     time.sleep(0.1)
-        # else:
-        #     play('./notes/sung/{}.wav'.format(target))
-
         time.sleep(2.5)
-
         for note in target_seq:
             path = "./notes/" + note + '/' + random.choice(os.listdir("./notes/" + note + "/"))
             play(path)
 
             time.sleep(speed)
 
-
-
-
-
             if note == target:
                 print(colored('that was the target note', 'green'))
             else:
                 if display:
-                    out = note  
+                    out = note
                     if out == 'C#':
                         out = 'Db'
                     elif out == 'D#':
@@ -74,7 +110,7 @@ def run_seq(test_seq, hard=False, speed=0.7, display=False):
                     print(colored('that was not the target note', 'red'))
 
 
-def run(test_seq):
+def run(notes):
     args = len(sys.argv)
     display = False
     speed = 0.7
@@ -88,16 +124,17 @@ def run(test_seq):
             speed = 1.8
     if args >= 3:
         if sys.argv[2] == 'W':
-            test_seq = weak
-            print(f"{test_seq}")
+            notes = weak
+            print(f"{notes}")
         elif sys.argv[2] == 'D':
             display = True
 
     if args >= 4:
         if sys.argv[3] == 'D':
             display = True
-    random.shuffle(test_seq)
-    run_seq(test_seq, speed=speed, display=display)
+    # random.shuffle(notes)
+    accumulate_seq(notes, False, 0.8)
+    # run_seq(test_seq, speed=speed, display=display)
 
     # else:
     #     test_seq = [input('What pitch to test? ')]
@@ -106,4 +143,4 @@ def run(test_seq):
     #     return
 
 
-run(all)
+run(fixed)

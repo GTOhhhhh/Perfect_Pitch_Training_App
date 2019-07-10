@@ -9,8 +9,12 @@ from colorama import init
 
 all = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
 sharps = ['A#', 'C#', 'D#', 'F#', 'G#']
+temp = ['A#', 'F', 'C', 'C#', 'A', 'D']
 # weak = ['G#', 'A#', 'C', 'C#',  'D#']
-weak = ['C#', 'F', 'F#', 'A#']
+# weak = ['A', 'A#', 'B', 'C', 'C#']
+weak = ['F', 'F#', 'E']
+
+weak = list(reversed(weak))
 naturals = list(set(all) - set(sharps))
 
 # initialize terminal colors
@@ -77,13 +81,13 @@ def run_seq(test_seq, hard=False, speed=0.7, display=False):
 def run(test_seq):
     args = len(sys.argv)
     display = False
-    speed = 0.7
+    speed = 0.68
     if args == 1:
         sys.argv.append('A')
     if args >= 2:
         print(sys.argv[1])
         if sys.argv[2] == 'F':
-            speed = 0.7
+            speed = 0.68
         elif sys.argv[2] == 'S':
             speed = 1.8
     if args >= 3:
@@ -107,3 +111,4 @@ def run(test_seq):
 
 
 run(all)
+

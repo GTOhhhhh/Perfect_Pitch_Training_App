@@ -12,7 +12,7 @@ sharps = ['A#', 'C#', 'D#', 'F#', 'G#']
 temp = ['A#', 'F', 'C', 'C#', 'A', 'D']
 # weak = ['G#', 'A#', 'C', 'C#',  'D#']
 # weak = ['A', 'A#', 'B', 'C', 'C#']
-weak = ['F', 'F#', 'E']
+weak = ['D']
 
 weak = list(reversed(weak))
 naturals = list(set(all) - set(sharps))
@@ -22,7 +22,7 @@ init()
 
 
 # 32 notes for each tone, target note added 4, 5 or  times
-def gen_seq(target, k=90, add=14):
+def gen_seq(target, k=180, add=12):
     seq = list(all)
     seq.remove(target)
     seq = random.choices(seq, k=k)
@@ -55,11 +55,7 @@ def run_seq(test_seq, hard=False, speed=0.7, display=False):
             play(path)
 
             time.sleep(speed)
-
-
-
-
-
+            
             if note == target:
                 print(colored('that was the target note', 'green'))
             else:
@@ -76,6 +72,9 @@ def run_seq(test_seq, hard=False, speed=0.7, display=False):
                     print(colored('that was not the target note ({})'.format(out), 'red'))
                 else:
                     print(colored('that was not the target note', 'red'))
+
+      
+
 
 
 def run(test_seq):

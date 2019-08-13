@@ -9,7 +9,7 @@ from colorama import init
 
 # all = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
 scale = ['E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C#', 'C', 'D', 'D#']
-# scale = scale[::-1]
+scale = scale[::-1]
 fixed = ['C#', 'F', 'A#', 'C', 'A', 'D#', 'B', 'F#', 'G#', 'E', 'D', 'G']
 sharps = ['A#', 'C#', 'D#', 'F#', 'G#']
 # weak = ['G#', 'A#', 'C', 'C#',  'D#']

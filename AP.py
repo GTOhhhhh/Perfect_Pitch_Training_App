@@ -86,7 +86,7 @@ def run(test_seq):
     if args >= 2:
         print(sys.argv[1])
         if sys.argv[2] == 'F':
-            speed = 0.68
+            speed = 1.35
         elif sys.argv[2] == 'S':
             speed = 1.8
     if args >= 3:

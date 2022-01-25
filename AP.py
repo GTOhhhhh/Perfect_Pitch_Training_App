@@ -52,6 +52,7 @@ def run_seq(test_seq, hard=False, speed=0.7, display=False):
 
         for note in target_seq:
             path = "./notes/" + note + '/' + random.choice(os.listdir("./notes/" + note + "/"))
+            print(path)
             play(path)
 
             time.sleep(speed)
